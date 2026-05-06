@@ -17,4 +17,4 @@ Search [`DEVLOG.md`](./DEVLOG.md) for `assume` or `assumption` to see reasonings
 - That all transactions should be ignored after an account has been frozen.
 - A transaction can be disputed only once
 - Only deposits can be disputed. Assume withdrawal cannot be disputed and discard disputes for withdrawals.
-- Where the clientid AND transaction id of a dispute do not match the referenced transaction assume error or malformed and ignore the dispute.
+- The clientid of a transaction should always match the clientid of the reference transaction id to be valid.

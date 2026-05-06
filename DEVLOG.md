@@ -137,7 +137,7 @@ seperation of what has been determined so far from thinking about the domain mod
 Given the Domain model from @DEVLOG.md lets draft a formal domain-model.md in @context. It should be small and structural.
 Include validation rules. Exclude dynamic behaviour. We will make a seperate form state-machine doc to capture dynamic rules and transitions.
 Do not make assumptions, instead interview me for anything you do not know or decision that need to be made.
-**AI Prompt Refinements**:
+**Engineering Judgement**:
 Include negative amounts in input transactions as a validation rules so that it never enters the system allowing engine to focus on engine
 behaviour.
 Make a note in the doc about parsing whitespace.
@@ -146,10 +146,28 @@ Confirmed. This eliminates a class of bugs, ops and reduces storage size. Total 
 **Artifact**:
 Produced a formal [`domain-model.md`](./context/domain-model.md) through prompts based on my domain model here in the devlog.
 
-## Next
+Before implementing the types lets also formalise the state machine which formalises the dynamic behaviour and rules of the static model.
+**AI Prompt**:
+Given the Domain model from @DEVLOG.md we have already formalised the static domain types @context/domain-model.md. We additionally need to
+formalise the dynamic bahviour and rules. Lets do this as a state machine doc. Lets draft and iterate on a state machine file in the context
+folder. I expect we will surface some decision areas. Bring those to me in the discussion as we iterate so I can exercise my judgement.
+**Engineering Judgement**:
+Model acount locking (frozen) as a seperate state machine or a per transaction guard condition. Coneptually clearer to model seperate.
+Discussion surfaced that client-match assumption (dispute rows client must match referenced transactions client) should apply to resolve and
+chargeback rows. I will update the assumptions. This is in keeping with financial institutions who would not allow a transaction to be carried
+out by one client on another client.
+Should we create a new client if it does not exist in all scenarios? Technically we should only create a new account in deposit situations.
+This is because technically it is impossible to perform a withdrawal without an account (no account=0, balance) and the same can be said for
+the other transaction types, you actually cant perform a dispute, resolve or chargeback if there is no transaction to reference. There can
+only be a transaction to reference if we have had at least one deposit. We may wish to still create the account with 0 balance however so
+we can test expected output of that client as 0. So lets create account with balances of 0 unless deposit and ignore transactions under there
+own rules in these circumstances.
+**Artifact**:
+Produced a formal state machine doc for dynamic behaviour model [`state-machine.md](./context/state-machine.md) note this does not dictate we
+build a state machine just it is a natural representation to capture all states, transitions and rules.
 
+## Next
 Current thoughts:
-I ended up modelling rules along with the domain model, we should model State machine out the rules/transitions discussed in the domain model
 Engine logic should be pure functions so easy to unit test.
 Need to build the I/O layer
 Decide engine or I/O first
