@@ -26,6 +26,8 @@ engineering narration.
 I believe a running narration of usage alongside engineering decisions
 to be more insightful than providing a raw dumpt of `prompts`/`sessions`.
 
+You can scan for `**AI Usage**` and `**AI Prompt**` or `AI` to find usage.
+
 ### Raw key prompts and context
 Artifacts can be considered as key raw context for an initial prompts context.
 You can consider plan artifacts themselves as both key and raw prompts for your viewing.
