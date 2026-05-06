@@ -129,6 +129,23 @@ For production we would want to do benchmarks and a thorough analysis of library
 Most performant without a dep would be Integer scaling but not suitable here as the tradeoff is bugs and clean code. Out of scope for now.
 Use the standard rust_decimal crate. No heap allocation per op so fine for streaming/large inputs. Production ready for similar uses.
 
+### Artifacts
+
+At this point it is time to formalise all this into a domain-model artifact and a state machine artifact. I believe this provides a clean
+seperation of what has been determined so far from thinking about the domain model/rules: the static structure and the dynamic behaviour.
+**AI Prompt**: 
+Given the Domain model from @DEVLOG.md lets draft a formal domain-model.md in @context. It should be small and structural.
+Include validation rules. Exclude dynamic behaviour. We will make a seperate form state-machine doc to capture dynamic rules and transitions.
+Do not make assumptions, instead interview me for anything you do not know or decision that need to be made.
+**AI Prompt Refinements**:
+Include negative amounts in input transactions as a validation rules so that it never enters the system allowing engine to focus on engine
+behaviour.
+Make a note in the doc about parsing whitespace.
+Show me visually walking through each rule that mentions total to confirm that we can derive it for output but not need to store it internally.
+Confirmed. This eliminates a class of bugs, ops and reduces storage size. Total is derived.
+**Artifact**:
+Produced a formal [`domain-model.md`](./context/domain-model.md) through prompts based on my domain model here in the devlog.
+
 ## Next
 
 Current thoughts:
