@@ -166,16 +166,31 @@ own rules in these circumstances.
 Produced a formal state machine doc for dynamic behaviour model [`state-machine.md](./context/state-machine.md) note this does not dictate we
 build a state machine just it is a natural representation to capture all states, transitions and rules.
 
-## Next
-Current thoughts:
-Engine logic should be pure functions so easy to unit test.
-Need to build the I/O layer
-Decide engine or I/O first
-CSV ingestion should be able to handle extreme size
-Need to create test input files and expected outputs that encodes all edge case
-Perhaps one file that tests all edge cases by specific clients ids allowing us to test expected
-outputs fairly easily.
-Maybe a script to generate an extremely large input file to validate that it can handle.
+## Milestone 2 - Engine Types, Data Structures, Functions and Unit Test Plan + Implementation
+
+**AI Prompt**: /plan Produce an implementation plan for the payment engine described in @DEVLOG.md, @ASSUMPTIONS.md, @context/domain-model.md,
+@context/state-machine.md. Treat those four documents as the canonical specification. Paritcularly the formal @context documents. The plan should 
+cover: project layout (modules), public types, the engines input/output flow, the five row handler functions, error/ignore handling, and a unit-test 
+strategy that exercises every transition and ignored input case from the state machine. Do not write code yet. Surface any gap or ambiguity in the 
+artifacts before producing the plan. We will make a seperate plan for CSV Parsing, I/O and integrations. We should prioritise clean, working,
+extensible, idiomatic rust code over efficiency. That said we should not neglect easy performance wins from a time space complexity. 
+That said I believe hashmaps O(1) lookups are the play here for our data structures.
+**Surfaced/Decisions/Clarity**
+Should we ignore dispute,resolve,chargeback's with amounts. I think we should be strict and consider it malformed and ignore it. We may revisit this.
+Internal state data structure. I already decided what structure the 'state machine'/'engine' will take. Just pure functions for each transaction type.
+I also decided on a hashmap for looking up disputes. However I did not decide on the 'account' data structure. Output is not required to be sorted
+but there are benefits to testing if we can get it for near free. If we can also gain/keep near O(1) time complexity and not overly effect space then
+why not. I will have a discussion with claude on the options vs just using my original plan of a hashmap. Decided to stick with initial plan for hashmap.
+We could consider using a BTreeMap<u16, Account> instead of HashMap<u16, Account> in the future if we need sorted output. The cost would be O(1) lookups
+/upserts > O(log n). If we did sorting on the hashmap then the output sort at the end would be a one time O(n log n) anortised across the whole stream.
+Decided to add sorting of hashmap at the end for ease of testing though we might have to revisit that if it is going to cause us issues with large test
+files. Review.
+Engine to surface errors but not be responsible for printing.
+**Artifacts**:
+End result of prompting and follow up iterations is the implementation plan for handover to claude for implementation.
+
+## Milestone 3 - CSV Parser, Integration and Integration Tests Plan + Implementation
+
 
 
 
