@@ -187,7 +187,7 @@ Decided to add sorting of hashmap at the end for ease of testing though we might
 files. Review.
 Engine to surface errors but not be responsible for printing.
 **Artifacts**:
-End result of prompting and follow up iterations is the implementation plan for handover to claude for implementation.
+End result of prompting and follow up iterations is the implementation plan for handover to claude for implementation. ['engine-plan.md'](./context/engine-plan.md)
 
 **AI Prompt**:
 Implement this plan. Surface issues to me rather than making decision. Provide a detailed end summary. Follow the @context and plan closely.
@@ -196,6 +196,27 @@ Implement this plan. Surface issues to me rather than making decision. Provide a
 Verification against specs, plan and code review by myself and claude.
 
 ## Milestone 3 - CSV Parser, Integration and Integration Tests Plan + Implementation
+
+**AI Prompt**: /plan Produce an implementation plan for the CSV parser, I/O, Engine Integration and Integration Tests. For context you can refer to
+the @context and the engine implementation and the engine tests @src and @tests. The plan should account for stream values through memory as opposed 
+to loading the entire data set upfront so that we can handle large files. Surface any gap or ambiguity in the artifacts before producing the plan. W
+We should prioritise clean, working, extensible, idiomatic rust code over efficiency. We should consider performance implications. The integration 
+tests will have to account for the fact that output client order isnt guranteed.
+**Surfaced/Decisions/Clarity**:
+Strict vs lenient row parsing. Ignoring malformed rows as per spec. The parser must tolerate whitespace. Reject negative amounts. Reject amount on
+dispute/resolve/chargebacks. Structural failures of a row should also cause consistent behaviour (ignore and raise stderr).
+For integration tests we will parse expected and actual into respective hashmaps rather than file sort which is flaky.
+Parser should reject as malformed > 4 d.p. amounts.
+Errors going to stderr should include the raw row data for debugging.
+We should pass integration tests from realistic csv files commited not strings.
+We will co-locate the reader and writer for now but would revisit if we expanded.
+Use Bankers rounding (half to even) for rounding decisions rather than half away from zero.
+Do not exit on handled errors/expected errors.
+We should not only test happy paths but edge cases according to the prior art on testing.
+**Artifacts**:
+Generated and iterated on ['csv-engine-integration-plan.md'](./context/csv-engine-integration-plan.md)
+
+
 
 
 
