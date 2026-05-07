@@ -214,10 +214,19 @@ Use Bankers rounding (half to even) for rounding decisions rather than half away
 Do not exit on handled errors/expected errors.
 We should not only test happy paths but edge cases according to the prior art on testing.
 **Artifacts**:
-Generated and iterated on ['csv-engine-integration-plan.md'](./context/csv-engine-integration-plan.md)
+Generated and iterated on ['csv-io-plan.md'](./context/csv-io-plan.md)
 
+**AI Prompt**:
+Implement this plan @csv-io-plan.md. Surface issues to me. Do not fudge code to pass tests. Provide a detailed end summary. Follow the 
+plan and @context closely and surface deviations for review and verification.
+**AI Generated Code**
+**AI Generated test matrix of engine based on the state-machine rules I built**
+Verification against specs, plan and code review by myself and claude.
 
+## Closing
 
-
-
+Document usage of unit and integration tests.
+Additional documentation could be generated (architecture etc.) Test are self describing but a matrix file could be formed.
+Performance optimizations and library benchmarking.
+Consider tokio for future expansion.
 

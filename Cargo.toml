@@ -5,3 +5,9 @@ edition = "2024"
 
 [dependencies]
 rust_decimal = "1.42"
+csv = "1"
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+assert_cmd = "2"
+tempfile = "3"
