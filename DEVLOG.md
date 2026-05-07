@@ -225,8 +225,13 @@ Verification against specs, plan and code review by myself and claude.
 
 ## Closing
 
-Document usage of unit and integration tests.
+Immediate priority:
+**Improve the readme**
+I need to reflect on core aspects of the solution, testing, efficiency etc.
+
+Other:
 Additional documentation could be generated (architecture etc.) Test are self describing but a matrix file could be formed.
 Performance optimizations and library benchmarking.
 Consider tokio for future expansion.
+Fix stderr format - it is inconsistent between the parse and engine rejections (ignores via Display for praser and engine via Debug)
 
