@@ -189,6 +189,12 @@ Engine to surface errors but not be responsible for printing.
 **Artifacts**:
 End result of prompting and follow up iterations is the implementation plan for handover to claude for implementation.
 
+**AI Prompt**:
+Implement this plan. Surface issues to me rather than making decision. Provide a detailed end summary. Follow the @context and plan closely.
+**AI Generated Code**
+**AI Generated test matrix of engine based on the state-machine rules I built**
+Verification against specs, plan and code review by myself and claude.
+
 ## Milestone 3 - CSV Parser, Integration and Integration Tests Plan + Implementation
 
 
